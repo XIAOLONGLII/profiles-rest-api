@@ -13,7 +13,7 @@ class UserProfileManager(BaseUserManager):
         email = self.normalize_email(email)
         user = self.model(email=email, name=name)
 
-        user.set_passwprd(password)
+        user.set_password(password)
         user.save(using=self._db)
 
         return user
