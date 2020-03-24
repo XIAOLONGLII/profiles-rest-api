@@ -44,8 +44,8 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
         return self.name
     def get_short_name(self):
         return self.name
-    def __str__(self, arg):
-        super(UserProfile, self).__init__()
-        return self.email
+    def __str__(self):#,arg):
+        #super(UserProfile, self).__init__()
+        return "Email: " + self.email + " Name: " + self.name
 
 # Create your models here.
