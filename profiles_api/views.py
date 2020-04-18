@@ -5,8 +5,11 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.authentication import TokenAuthentication
+""" 3. filter - search functions """
 from rest_framework import filters
-
+"""4. create a log in API"""
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.settings import api_settings
 from profiles_api import serializers
 from profiles_api import models
 from profiles_api import permissions
@@ -22,11 +25,11 @@ class HelloApiView(APIView):
             Http request, will call the get()
         """
         an_apiview = [
-        'Uses HTTP methods as fuction (get, post, patch, put, delete)',
-        'Is similar to a traditional Djaon View',
-        'Hello NYC',
-        'Hello world',
-        'Hello tokyo',
+            'Uses HTTP methods as fuction (get, post, patch, put, delete)',
+            'Is similar to a traditional Djaon View',
+            'Hello NYC',
+            'Hello world',
+            'Hello tokyo',
         ]
         return Response({'message': 'Hello!', 'an_apiview': an_apiview})
 
@@ -71,7 +74,7 @@ class HelloViewSet(viewsets.ViewSet):
         ]
         return Response({'message': 'Hello!', 'a_viewset': a_viewset})
 
-    def creat(self, request):
+    def create(self, request):
         """create a new hello message"""
         serializer = self.serializer_class(data=request.data)
 
@@ -84,8 +87,10 @@ class HelloViewSet(viewsets.ViewSet):
                 serializer.errors,
                 status = status.HTTP_400_BAD_REQUEST
             )
-    def retrieve(self, request, pk=None):
+    def get(self, request, pk=None):
         return Response({'http_method': 'GET'})
+    def post(self, request, pk=None):
+        return Response({'http_method': 'POST'})
     def update(self, request, pk=None):
         return Response({'http_method': 'PUT'})
     def partial_update(self, request, pk=None):
@@ -104,3 +109,7 @@ class UserProfileViewSet(viewsets.ModelViewSet): # connect serializer class, pro
     #search
     filter_backends = (filters.SearchFilter,)
     search_fields = ('name', 'email',)
+
+class UserLoginApiView(ObtainAuthToken):
+    """Handler creating user authentication tokens"""
+    renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
