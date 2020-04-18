@@ -59,9 +59,9 @@ class HelloViewSet(viewsets.ViewSet):
     def list(self, request):
         """return a hello message"""
         a_viewset = [
-        'Uses actions (list, create, retrieve, update, partial_update)',
-        'Automatically maps to URLs using routers',
-        'Provide more fuctionlitu with less code',
+            'Uses actions (list, create, retrieve, update, partial_update)',
+            'Automatically maps to URLs using routers',
+            'Provide more fuctionlitu with less code',
         ]
         return Response({'message': 'Hello!', 'a_viewset': a_viewset})
 
