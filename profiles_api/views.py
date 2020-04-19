@@ -14,7 +14,7 @@ from rest_framework.permissions import IsAuthenticated
 from profiles_api import serializers
 from profiles_api import models
 from profiles_api import permissions
-
+from django.http import HttpResponse
 
 
 class HelloApiView(APIView):
@@ -98,6 +98,12 @@ class HelloViewSet(viewsets.ViewSet):
         return Response({'http_method': 'PATCH'})
     def destroy(self, request, pk=None):
         return Response({'http_method': 'DELETE'})
+
+from django.template import loader
+def index(request):
+    template = loader.get_template('templates/index.html')
+    context = {}
+    return HttpResponse(template.render(context, request))
 
 
 class UserProfileViewSet(viewsets.ModelViewSet): # connect serializer class, provide queryse
