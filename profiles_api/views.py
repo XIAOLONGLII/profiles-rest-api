@@ -89,8 +89,8 @@ class HelloViewSet(viewsets.ViewSet):
             )
     def get(self, request, pk=None):
         return Response({'http_method': 'GET'})
-    def post(self, request, pk=None):
-        return Response({'http_method': 'POST'})
+    # def post(self, request, pk=None):
+    #     return Response({'http_method': 'POST'})
     def update(self, request, pk=None):
         return Response({'http_method': 'PUT'})
     def partial_update(self, request, pk=None):
@@ -113,3 +113,13 @@ class UserProfileViewSet(viewsets.ModelViewSet): # connect serializer class, pro
 class UserLoginApiView(ObtainAuthToken):
     """Handler creating user authentication tokens"""
     renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
+
+class UserProfileFeedViewSet(viewsets.ModelViewSet):
+    """handles creating, reading/ updating profile feed items"""
+    authentication_classes = (TokenAuthentication,)
+    serializer_class = serializers.ProfileFeedItemSerializer
+    queryset = models.ProfileFeedItem.objects.all()
+
+    def perform_create(self, serializer):
+        """set user profile to te logged in user"""
+        serializer.save(user_profile=self.request.user)
