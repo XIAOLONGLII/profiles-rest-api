@@ -1,7 +1,9 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-
+from django.conf.urls.static import static
+from django.conf import settings
 from profiles_api import views
+
 
 router = DefaultRouter()
 router.register('hello-viewset', views.HelloViewSet, base_name = 'hello-viewset')
@@ -12,4 +14,4 @@ urlpatterns = [
     path('hello-view/',views.HelloApiView.as_view()),
     path('login/',views.UserLoginApiView.as_view()),
     path('',include(router.urls))
-]
+]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
