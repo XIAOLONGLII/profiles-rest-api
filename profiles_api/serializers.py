@@ -5,7 +5,7 @@ class HelloSerializer(serializers.Serializer):
     """ Serializes a name filed for testing out API VIEW"""
     name = serializers.CharField(max_length = 10)
 
-#model serializer
+#model serializer will connect the userProfileModel
 class userProfileSerializer(serializers.ModelSerializer):
     """serializer a user profile object"""
 

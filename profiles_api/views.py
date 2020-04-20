@@ -19,6 +19,8 @@ from django.http import HttpResponse
 
 class HelloApiView(APIView):
     """1. Test API View"""
+    #this will config our API view to have setializer class
+    # it will call the serializer class, and the name max length is 10
     serializer_class = serializers.HelloSerializer
 
     def get(self, request, format=None):
@@ -39,9 +41,10 @@ class HelloApiView(APIView):
         """create a hello message with our name"""
         serializer = self.serializer_class(data=request.data)
 
+        #check if serializer if it is valid
         if serializer.is_valid():
             name = serializer.validated_data.get('name')
-            message = f'Hello{name}'
+            message = f'Hello {name}'
             return Response({'message': message})
         else:
             return Response(
@@ -106,6 +109,7 @@ def index(request):
     return HttpResponse(template.render(context, request))
 
 
+# !!!!! access serializer thru an endpoint
 class UserProfileViewSet(viewsets.ModelViewSet): # connect serializer class, provide queryse
     """handel creating and updating profiles"""
     serializer_class = serializers.userProfileSerializer
@@ -126,7 +130,7 @@ class UserProfileFeedViewSet(viewsets.ModelViewSet):
     authentication_classes = (TokenAuthentication,)
     serializer_class = serializers.ProfileFeedItemSerializer
     queryset = models.ProfileFeedItem.objects.all()
-    permission_classes = ( permissions.UpdateOwnStatus, IsAuthenticated )
+    permission_classes = (permissions.UpdateOwnStatus, IsAuthenticated )
 
     def perform_create(self, serializer):
         """set user profile to te logged in user"""

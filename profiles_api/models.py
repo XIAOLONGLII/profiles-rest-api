@@ -2,9 +2,10 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.models import BaseUserManager
-from django.conf import settings
+from django.conf import settings #this will retrieve settings from project api_settings
 
 
+# create super user
 class UserProfileManager(BaseUserManager):
     """Manager for user profile """
     def create_user(self, email, name, password=None):
@@ -28,7 +29,7 @@ class UserProfileManager(BaseUserManager):
 
         return user
 
-
+#user profile model to let use email address instead of username
 class UserProfile(AbstractBaseUser, PermissionsMixin):
     """Database model for users in the system"""
     email = models.EmailField(max_length=255, unique=True)
@@ -50,6 +51,7 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
         return "Email: " + self.email + " Name: " + self.name
 
 # Create your models here.
+#1.  Django model for stroing the user profile feed iterms in the database
 class ProfileFeedItem(models.Model):
     """profile status update
     **foreign key link one model to another model
